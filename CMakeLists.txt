@@ -30,7 +30,6 @@ add_definitions(
 
 # link libraries
 link_libraries(
-    ${CMAKE_THREAD_LIBS_INIT}
     jsoncpp
 )
 
@@ -43,10 +42,12 @@ include_directories(
 link_directories(
 )
 
-file(GLOB SOURCES "src/*.cpp")
+#file(GLOB SOURCES "src/*.cpp")
 set(SRC_LIST
-    src/*.cpp
+    src/test.cpp
 )
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
+add_library(util STATIC ${SRC_LIST})
 #if (CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
 #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -ansi -Wall -pthread -Wpedantic -D_GNU_SOURCE -std=c99")
 #endif()
