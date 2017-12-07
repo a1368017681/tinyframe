@@ -43,11 +43,13 @@ link_directories(
 #file(GLOB SOURCES "src/*.cpp")
 set(SRC_LIST
     test.cpp
+    rio.cpp
 )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/output)
 add_library(util STATIC ${SRC_LIST})
 install(FILES
     noncopyable.h
+    rio.h
     DESTINATION util
 )
 set(CPACK_GENERATOR "TGZ")
