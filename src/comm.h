@@ -1,13 +1,14 @@
 /**********************************************************
  * Author        : geqiankun
  * Email         : scugqk@gmail.com
- * Last modified : 2017-12-07 19:58
- * Filename      : test.cpp
+ * Last modified : 2017-12-07 20:30
+ * Filename      : comm.h
  * Description   : 
  * *******************************************************/
-#include <iostream>
 
-int test(){
-    std::cout << "test" << std::endl;
-    return 0;
-}
+#ifndef _COMM_H
+
+#include <assert.h>
+
+
+#endif
