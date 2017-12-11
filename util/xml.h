@@ -24,8 +24,14 @@ class XmlNode {
 public:
     XmlNode(xmlNodePtr node = NULL): node_(node) {}
 
-    std::string getContent(const std::string& path) const {
-        //TODO
+    std::string getContent() const {
+        if (node_) {
+            for (xmlNodePtr it = node_->children; it; it = it->next) {
+                if (!xmlStrcmp(it->name, BAD_CAST "text")) {
+                    return (const char*)it->content;
+                }
+            }
+        }
         return "";
     }
 
@@ -87,14 +93,16 @@ inline XmlNode getNode(XmlNode node, const std::string& path) {
     return getNode(node, v);
 }
 
-inline void getNodeList(XmlNode root, const std::string& path, std::vector<XmlNode>& nodes) {
+inline std::vector<XmlNode> getNodeList(XmlNode root, const std::string& path) {
     std::vector<std::string> v;
     split(path, v, ".");
     XmlNode node = getNode(root, v);
+    std::vector<XmlNode> nodes;
     while (node) {
         nodes.push_back(node);
         node = node.findNextSibling(v.back());
     }
+    return nodes;
 }
 
 class XmlParser {
@@ -109,6 +117,20 @@ public:
 
     XmlNode getNode(const std::string& path) const {
         return xml::getNode(getRoot(), path);
+    }
+
+    XmlNode getNode(const std::vector<std::string>& path) const {
+        return xml::getNode(getRoot(), path);
+    }
+
+    std::vector<XmlNode> getNodeList(const std::string& path) const {
+        return xml::getNodeList(getRoot(), path);
+    }
+
+    std::string getValue(const std::string& path, const char* dflt) {
+        XmlNode node = getNode(path);
+        std::string content = node ? node.getContent(): "";
+        return !content.empty() ? content : dflt;
     }
 private:
     xmlDocPtr doc_;
