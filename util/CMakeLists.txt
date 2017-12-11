@@ -28,12 +28,16 @@ add_definitions(
 
 # link libraries
 link_libraries(
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${Boost_LIBRARIES}
     jsoncpp
 )
 
 # set include dic path
 include_directories(
     "/usr/include/jsoncpp"
+    "/usr/include/libxml2"
+    "${PROJECT_SOURCE_DIR}"
 )
 
 # set link dic path
@@ -50,6 +54,7 @@ add_library(util STATIC ${SRC_LIST})
 install(FILES
     noncopyable.h
     rio.h
+    lock.h
     DESTINATION util
 )
 set(CPACK_GENERATOR "TGZ")

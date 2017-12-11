@@ -28,10 +28,10 @@ public:
     ~Lock() {
         pthread_mutex_destroy(&lock_);
     }
-    lock() const {
+    void lock() const {
         pthread_mutex_lock(&lock_);
     }
-    unlock() const {
+    void unlock() const {
         pthread_mutex_unlock(&lock_);
     }
     bool trylock() const {
@@ -45,6 +45,7 @@ private:
     mutable pthread_mutex_t lock_;
 };
 
+#ifdef UNIX
 class SpinLock: noncopyable {
 public:
     SpinLock() {
@@ -53,10 +54,10 @@ public:
     ~SpinLock() {
         pthread_spin_destroy(&lock_);
     }
-    lock() const {
+    void lock() const {
         pthread_spin_lock(&lock_);
     }
-    unlock() const {
+    void unlock() const {
         pthread_spin_unlock(&lock_);
     }
     bool trylock() const {
@@ -69,6 +70,7 @@ public:
 private:
     mutable pthread_spinlock_t lock_;
 };
+#endif
 
 template<typename Type>
 class LockGuardImpl : noncopyable {
@@ -78,11 +80,11 @@ public:
     }
     ~LockGuardImpl() {
         if (isLocked) {
-            lock_unlock();
+            lock_.unlock();
         }
     }
 private:
-    T& lock_;
+    Type& lock_;
     bool isLocked;
 };
 

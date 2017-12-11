@@ -12,16 +12,16 @@
 #ifndef _SINGLETON_H
 #define _SINGLETON_H
 
-#include <comm.h>
+#include "util/comm.h"
 
 namespace util{
     
 template<typename T>
     class Singleton{
     protected:
-        static T* singelton_;
+        static T* singleton_;
     public:
-        Singelton(void) {
+        Singleton(void) {
             assert(!singleton_);
             singleton_ = static_cast<T*>(this);
 //            int offset = (int)(T*)1 - (int)(Singleton <T>*)(T*)1;
@@ -32,13 +32,13 @@ template<typename T>
             singleton_ = 0;
         }
         static T& getSingleton(void) {
-            assert(singleton);
+            assert(singleton_);
             return (*singleton_);
         }
         static T* getSingletonPtr(void) {
             return singleton_;
         }
-    }
+    };
 
 #define SINGLETON_INIT(TYPE)   \
     template<> TYPE* Singleton<TYPE>::singleton_ = 0;

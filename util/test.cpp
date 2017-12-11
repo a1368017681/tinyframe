@@ -6,6 +6,11 @@
  * Description   : 
  * *******************************************************/
 #include <iostream>
+#include "xml.h"
+#include "singleton.h"
+#include "lock.h"
+#include "noncopyable.h"
+#include "xml.h"
 
 int test(){
     std::cout << "test" << std::endl;

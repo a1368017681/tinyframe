@@ -1,3 +1,4 @@
 cmake_minimum_required (VERSION 2.6)
-PROJECT(util)
-add_subdirectory(src)
+PROJECT(any)
+add_subdirectory(util)
+add_subdirectory(plugins)
